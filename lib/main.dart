@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false ,
       title: 'SimpliMoney_MTN',
       theme: ThemeData(  
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromRGBO(253,203,12,5)),
