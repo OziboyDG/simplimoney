@@ -34,13 +34,81 @@ class _RetraitState extends State<Retrait> {
         child:Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Center(
+            const Center(
               child: Text("Confirmer le retrait", style: TextStyle(
                 fontSize: 30
               ),),
+            ),
+            Container(
+              padding: const EdgeInsets.only(top: 20),
+              child: const Text("Votre retrait en attente.", 
+              style: TextStyle(
+                fontSize: 20, 
+                fontWeight: FontWeight.bold, 
+                color: Color.fromARGB(195, 4, 25, 163)), ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Card(
+              color: Colors.white54,
+              child: Container(
+                padding: const EdgeInsets.all(15),
+                height: 200,
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    const Text("Vous avez lancer un retrait de :", style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w500,
+                    ),),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text("2100 F CFA", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color:Color.fromARGB(195, 4, 25, 163),)),
+                    const SizedBox(height: 30,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: (){},
+                          child: Container(
+                            height: 50,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.green,
+                            ),
+                            child:const Center(child: Text("Confirmer", style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),)),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: (){},
+                          child: Container(
+                            height: 50,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.red,
+                            ),
+                            child: const Center(child: Text("Annuler", style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold
+                            ),)),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
             )
           ],
-        ) ),),
+        ) ),
+        floatingActionButton: ElevatedButton(onPressed: (){}, child: const Icon(Icons.volume_up)),),
 
     );
   }

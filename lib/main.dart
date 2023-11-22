@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
   }
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor: Colors.white,//Color.fromRGBO(253,203,12,5),
+      backgroundColor: Colors.white,
       body: SafeArea(child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
