@@ -14,8 +14,8 @@ class BaseClient {
     return response.body;
   }
 
-  static Future<bool> transfer() async{
-    String body = '''{\r\n    "amount": "20",\r\n    "currency": "EUR",\r\n    "externalId": "0001",\r\n    "payee": {\r\n        "partyIdType": "MSISDN",\r\n        "partyId": "36748513"\r\n    },\r\n    "payerMessage": "enjoy",\r\n    "payeeNote": "enjoy"\r\n}''';
+  static Future<bool> transfer(String n, String a) async{
+    String body = '''{\r\n    "amount": $a,\r\n    "currency": "EUR",\r\n    "externalId": "0001",\r\n    "payee": {\r\n        "partyIdType": "MSISDN",\r\n        "partyId": $n\r\n    },\r\n    "payerMessage": "enjoy",\r\n    "payeeNote": "enjoy"\r\n}''';
     String xRef = await getUUID();
     var headers = {
   'X-Reference-Id': xRef,

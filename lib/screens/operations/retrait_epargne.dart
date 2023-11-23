@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simplymoney_mtn/screens/final.dart';
 import 'package:simplymoney_mtn/widget/money_card.dart';
 
@@ -22,7 +23,13 @@ late final LocalAuthentication auth;
      super.initState();
      auth = LocalAuthentication(); 
    }
-   Future<void> _authenticate() async {
+   Future<void> _authenticate(int target) async {
+
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    int e = pref.getInt("thriftAmount")??0;
+    int a = pref.getInt("availableAmount")??0;
+    pref.setInt("thriftAmount",e-target);
+    pref.setInt("availableAmount",a+target);
     setState(() {
       _isAuthenticating = true;
     });
@@ -202,7 +209,20 @@ late final LocalAuthentication auth;
                   height: 20,
                  ),
                  InkWell(
-                  onTap: _authenticate,
+                  onTap: ()async {
+                    SharedPreferences pref = await SharedPreferences.getInstance();
+                    int thriftAmount = pref.getInt("thriftAmount")??0;
+                    int target = int.parse(moneyCtr.text);
+                    if(target <= thriftAmount){
+                      _authenticate(target);
+                    }else{
+                      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Solde épargne insuffisant"),
+        ),
+      );
+                    }
+                     },
                   child: Container(
                     height: 50,
                     width: 150,
