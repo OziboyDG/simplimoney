@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:simplymoney_mtn/consts/color_app.dart';
 import 'package:simplymoney_mtn/screens/authentification/empreinte.dart';
-import 'package:simplymoney_mtn/screens/welcome.dart';
 
 class PinPage extends StatefulWidget {
   const PinPage({super.key, required this.number});

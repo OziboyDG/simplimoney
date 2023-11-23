@@ -11,23 +11,18 @@ class FinalPage extends StatefulWidget {
 class _FinalPageState extends State<FinalPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-      color: AppColors.BackgroundColor,
-      image: DecorationImage(
-        image: const AssetImage("assets/images/mtn_momo.jpg"),
-        fit: BoxFit.cover,
-        colorFilter: ColorFilter.mode(AppColors.BackgroundColor.withOpacity(0.1), BlendMode.dstATop) )
-     ),
-     child: Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          
-        ],
-      ), ),
-    );
+    return Scaffold(
+     backgroundColor: const Color.fromARGB(255, 230, 224, 224),
+     body: Column(
+       mainAxisAlignment: MainAxisAlignment.start,
+       crossAxisAlignment: CrossAxisAlignment.center,
+       children: [
+         Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage("assets/merci.jpg"))
+          ),
+         )
+       ],
+     ), );
   }
 }
