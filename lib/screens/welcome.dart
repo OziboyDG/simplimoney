@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simplymoney_mtn/consts/color_app.dart';
 import 'package:simplymoney_mtn/screens/operations/epargne.dart';
 import 'package:simplymoney_mtn/screens/operations/retrait.dart';
@@ -13,17 +14,19 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
+  late int availableAmount;
   // static String number = '';
   // Future getData() async {
   //   SharedPreferences pref = await SharedPreferences.getInstance();
   //   number = pref.getString('NUMBER') ?? 'loading...';
   // }
 
-  // @override
-  // void initState() {
-  //   getData();
-  //   super.initState();
-  // }
+  @override
+  void initState() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    availableAmount = pref.getInt("availableAmount")??0;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +74,7 @@ class _WelcomeState extends State<Welcome> {
                     ),
                   ),
                   Text(
-                    "10,000 F CFA",
+                    "$availableAmount F CFA",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,

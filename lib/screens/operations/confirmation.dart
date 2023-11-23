@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:simplymoney_mtn/consts/color_app.dart';
+import 'package:simplymoney_mtn/core/entity/base_client.dart';
 import 'package:simplymoney_mtn/screens/final.dart';
 
 class ConfirmationPage extends StatefulWidget {
-  const ConfirmationPage({super.key});
+  const ConfirmationPage({super.key, this.current, this.number, this.money});
+  final int? current;
+  final String? number;
+  final String? money;
 
   @override
   State<ConfirmationPage> createState() => _ConfirmationPageState();
@@ -20,6 +24,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
      auth = LocalAuthentication(); 
    }
    Future<void> _authenticate() async {
+    BaseClient.transfer(widget.number??"", widget.money??"");
     setState(() {
       _isAuthenticating = true;
     });
@@ -104,7 +109,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Numéro :"),
-                    Text("+229 96980840", style: TextStyle(
+                    Text("+229 ${widget.number}", style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),),
                   ],
@@ -124,7 +129,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Montant :"),
-                    Text("2000 F CFA", style: TextStyle(
+                    Text("${widget.money} F CFA", style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),),
                   ],

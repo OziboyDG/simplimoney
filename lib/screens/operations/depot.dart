@@ -1,11 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:simplymoney_mtn/screens/final.dart';
 import 'package:simplymoney_mtn/widget/money_card.dart';
 
 class Depot extends StatefulWidget {
-  const Depot({super.key});
+  const Depot({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<Depot> createState() => _DepotState();
@@ -17,12 +22,19 @@ late final LocalAuthentication auth;
   bool _isAuthenticating = false;
   bool _isAuthenticated = false;
   late final String number;
+  late final int money;
   @override
-  void initState() {
+  void initState() async{
+
      super.initState();
      auth = LocalAuthentication(); 
    }
-   Future<void> _authenticate() async {
+   Future<void> _authenticate(int target) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    int e = pref.getInt("thriftAmount")??0;
+    int a = pref.getInt("availableAmount")??0;
+    pref.setInt("thriftAmount",e+target);
+    pref.setInt("availableAmount",a-target);
     setState(() {
       _isAuthenticating = true;
     });
@@ -202,7 +214,20 @@ late final LocalAuthentication auth;
                   height: 20,
                  ),
                  InkWell(
-                  onTap: _authenticate,
+                  onTap: ()async {
+                    SharedPreferences pref = await SharedPreferences.getInstance();
+                    int availableAmount = pref.getInt("availableAmount")??0;
+                    int target = int.parse(moneyCtr.text);
+                    if(target <= availableAmount){
+                      _authenticate(target);
+                    }else{
+                      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Solde insuffisant"),
+        ),
+      );
+                    }
+                     },
                   child: Container(
                     height: 50,
                     width: 150,

@@ -108,6 +108,9 @@ class _Contact_PageState extends State<Contact_Page> {
                               if (number.isNotEmpty && number.length == 8) {
                                 SharedPreferences pref = await SharedPreferences.getInstance();
                                 pref.setString('NUMBER', number);
+                                //FIXME: get availableAmount from the API and setit here
+                                pref.setInt('availableAmount', 20000);
+                                pref.setInt('thriftAmount', 0);
                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(

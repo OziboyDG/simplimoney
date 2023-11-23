@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simplymoney_mtn/core/entity/base_client.dart';
 import 'package:simplymoney_mtn/screens/operations/confirmation.dart';
 import 'package:simplymoney_mtn/widget/money_card.dart';
 
@@ -236,8 +238,20 @@ class _TransfertState extends State<Transfert> {
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.green)
           ),
-          onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> ConfirmationPage()));
+          onPressed: () async {
+          SharedPreferences pref = await SharedPreferences.getInstance(); 
+          int before = pref.getInt("availableAmount")??0;
+          int current = before - int.parse(moneyCtr.text);
+          if(current >= 0){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> ConfirmationPage(current:current,number: numberCtr.text,money: moneyCtr.text)));
+          pref.setInt("availableAmount", current);
+          } else{
+            ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("votre solde est insuffisant pour effectuer ce transfert"),
+        ),
+      );
+          } 
         }, child: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simplymoney_mtn/consts/color_app.dart';
 import 'package:simplymoney_mtn/screens/operations/depot.dart';
 import 'package:simplymoney_mtn/screens/operations/retrait_epargne.dart';
@@ -12,6 +13,13 @@ class Epargne extends StatefulWidget {
 }
 
 class _EpargneState extends State<Epargne> {
+  late int thriftAmount;
+  @override
+  void initState() async{
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      thriftAmount = pref.getInt("thriftAmount")??0;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +55,7 @@ class _EpargneState extends State<Epargne> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "0 F CFA",
+                    "$thriftAmount F CFA",
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 30,
