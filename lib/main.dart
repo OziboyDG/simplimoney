@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simplymoney_mtn/screens/authentification/contact_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,9 +10,10 @@ class MyApp extends StatelessWidget {
 
   
   @override
+
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false ,
       title: 'SimpliMoney_MTN',
       theme: ThemeData(  
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromRGBO(253,203,12,5)),
@@ -31,27 +33,26 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color.fromRGBO(253,203,12,5),
-      body: SafeArea(child: Stack(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Center(
-                child: Text("SimpliMoney", style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                  color: Colors.white70,
-                ),),
-              ),
-            ],
+  void initState() {
+    super.initState();
 
-          )
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => const Contact_Page(),
+      ));
+    });
+  }
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      backgroundColor: Colors.white,//Color.fromRGBO(253,203,12,5),
+      body: SafeArea(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset("assets/SimpliMoney_logo.jpg"),
         ],
+
       )),
     );
   }
