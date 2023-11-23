@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:simplymoney_mtn/consts/color_app.dart';
+import 'package:simplymoney_mtn/screens/final.dart';
 
 class ConfirmationPage extends StatefulWidget {
   const ConfirmationPage({super.key});
@@ -9,7 +11,41 @@ class ConfirmationPage extends StatefulWidget {
 }
 
 class _ConfirmationPageState extends State<ConfirmationPage> {
+  late final LocalAuthentication auth;
+  bool _isAuthenticating = false;
+  bool _isAuthenticated = false;
   @override
+  void initState() {
+     super.initState();
+     auth = LocalAuthentication(); 
+   }
+   Future<void> _authenticate() async {
+    setState(() {
+      _isAuthenticating = true;
+    });
+
+    try {
+      bool isAuthenticated = await auth.authenticate(
+        localizedReason: 'Veuillez scanner votre empreinte pour vous authentifier',
+      );
+
+      setState(() {
+        _isAuthenticated = isAuthenticated;
+        _isAuthenticating = false;
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>FinalPage()));
+      });
+    } catch (e) {
+      setState(() {
+        _isAuthenticating = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
+    }
+  }
+   
   Widget build(BuildContext context) {
     return  Container(
       decoration: BoxDecoration(
@@ -44,7 +80,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               ),
               Container(
                 padding: const EdgeInsets.only(top: 15),
-                child: Text("Votre transaction", style: TextStyle(
+                child: const Text("Votre transaction", style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 15,
                   color: Color.fromARGB(195, 4, 25, 163)
@@ -119,7 +155,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                 ),
               ),
               InkWell(
-                onTap: (){},
+                onTap: _authenticate,
                 child: Container(
                   alignment: Alignment.center,
                   height: 50,
@@ -128,7 +164,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                     borderRadius: BorderRadius.circular(30),
                     color: Colors.green,
                   ),
-                  child: Text("Confirmer le payement", style: TextStyle(
+                  child: const Text("Confirmer le payement", style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),),
