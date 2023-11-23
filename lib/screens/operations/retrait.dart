@@ -1,15 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:simplymoney_mtn/consts/color_app.dart';
+import 'package:simplymoney_mtn/screens/final.dart';
+import 'package:simplymoney_mtn/screens/welcome.dart';
 
 class Retrait extends StatefulWidget {
   const Retrait({super.key});
+  
+  get number => "";
 
   @override
   State<Retrait> createState() => _RetraitState();
 }
 
 class _RetraitState extends State<Retrait> {
+late final LocalAuthentication auth;
+  bool _isAuthenticating = false;
+  bool _isAuthenticated = false;
+  late final String number;
   @override
+  void initState() {
+     super.initState();
+     auth = LocalAuthentication(); 
+   }
+   Future<void> _authenticate() async {
+    setState(() {
+      _isAuthenticating = true;
+    });
+
+    try {
+      bool isAuthenticated = await auth.authenticate(
+        localizedReason: 'Veuillez scanner votre empreinte pour vous authentifier',
+      );
+
+      setState(() {
+        _isAuthenticated = isAuthenticated;
+        _isAuthenticating = false;
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>FinalPage()));
+      });
+    } catch (e) {
+      setState(() {
+        _isAuthenticating = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
+    }
+  }
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -71,7 +110,7 @@ class _RetraitState extends State<Retrait> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
-                          onTap: (){},
+                          onTap: _authenticate,
                           child: Container(
                             height: 50,
                             width: 120,
@@ -86,7 +125,9 @@ class _RetraitState extends State<Retrait> {
                           ),
                         ),
                         InkWell(
-                          onTap: (){},
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Welcome(number: widget.number,)));
+                          },
                           child: Container(
                             height: 50,
                             width: 120,

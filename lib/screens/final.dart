@@ -19,6 +19,15 @@ class _FinalPageState extends State<FinalPage> {
         fit: BoxFit.cover,
         colorFilter: ColorFilter.mode(AppColors.BackgroundColor.withOpacity(0.1), BlendMode.dstATop) )
      ),
+     child: Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          
+        ],
+      ), ),
     );
   }
 }

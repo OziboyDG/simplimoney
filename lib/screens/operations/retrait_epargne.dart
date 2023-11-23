@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:simplymoney_mtn/screens/final.dart';
 import 'package:simplymoney_mtn/widget/money_card.dart';
 
 class Epargne_Retrait extends StatefulWidget {
@@ -11,7 +13,41 @@ class Epargne_Retrait extends StatefulWidget {
 
 class _Epargne_RetraitState extends State<Epargne_Retrait> {
   TextEditingController moneyCtr = TextEditingController(text: '0');
+late final LocalAuthentication auth;
+  bool _isAuthenticating = false;
+  bool _isAuthenticated = false;
+  late final String number;
   @override
+  void initState() {
+     super.initState();
+     auth = LocalAuthentication(); 
+   }
+   Future<void> _authenticate() async {
+    setState(() {
+      _isAuthenticating = true;
+    });
+
+    try {
+      bool isAuthenticated = await auth.authenticate(
+        localizedReason: 'Veuillez scanner votre empreinte pour vous authentifier',
+      );
+
+      setState(() {
+        _isAuthenticated = isAuthenticated;
+        _isAuthenticating = false;
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>FinalPage()));
+      });
+    } catch (e) {
+      setState(() {
+        _isAuthenticating = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
+    }
+  }
   Widget build(BuildContext context) {
     return Scaffold(
      backgroundColor: const Color.fromARGB(255, 230, 224, 224),
@@ -166,9 +202,7 @@ class _Epargne_RetraitState extends State<Epargne_Retrait> {
                   height: 20,
                  ),
                  InkWell(
-                  onTap: () {
-                    
-                  },
+                  onTap: _authenticate,
                   child: Container(
                     height: 50,
                     width: 150,

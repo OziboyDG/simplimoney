@@ -14,7 +14,6 @@ class Welcome extends StatefulWidget {
 
 class _WelcomeState extends State<Welcome> {
   // static String number = '';
-
   // Future getData() async {
   //   SharedPreferences pref = await SharedPreferences.getInstance();
   //   number = pref.getString('NUMBER') ?? 'loading...';
