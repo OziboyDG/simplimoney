@@ -162,7 +162,7 @@ class _PinPageState extends State<PinPage> {
                     onTap: (){
                       String pin = "${pin1.text}${pin2.text}${pin3.text}${pin4.text}${pin5.text}";
                       print(pin);
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>EmpreinteDigitale(number: widget.number,)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>EmpreinteDigitale(number: widget.number)));
                     },
                     child: Center(
                       child: Container(
