@@ -5,6 +5,7 @@ import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:simplymoney_mtn/screens/final.dart';
+import 'package:simplymoney_mtn/screens/welcome.dart';
 import 'package:simplymoney_mtn/widget/money_card.dart';
 
 class Depot extends StatefulWidget {
@@ -24,7 +25,7 @@ late final LocalAuthentication auth;
   late final String number;
   late final int money;
   @override
-  void initState() async{
+  void initState() {
 
      super.initState();
      auth = LocalAuthentication(); 
@@ -43,11 +44,10 @@ late final LocalAuthentication auth;
       bool isAuthenticated = await auth.authenticate(
         localizedReason: 'Veuillez scanner votre empreinte pour vous authentifier',
       );
-
       setState(() {
         _isAuthenticated = isAuthenticated;
         _isAuthenticating = false;
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>FinalPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>const FinalPage()));
       });
     } catch (e) {
       setState(() {

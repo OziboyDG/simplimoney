@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simplymoney_mtn/consts/color_app.dart';
 import 'package:simplymoney_mtn/core/entity/base_client.dart';
 import 'package:simplymoney_mtn/screens/final.dart';
+import 'package:simplymoney_mtn/screens/welcome.dart';
 
 class ConfirmationPage extends StatefulWidget {
   const ConfirmationPage({super.key, this.current, this.number, this.money});
@@ -33,11 +35,10 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
       bool isAuthenticated = await auth.authenticate(
         localizedReason: 'Veuillez scanner votre empreinte pour vous authentifier',
       );
-
       setState(() {
         _isAuthenticated = isAuthenticated;
         _isAuthenticating = false;
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>FinalPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>const FinalPage()));
       });
     } catch (e) {
       setState(() {
