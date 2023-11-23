@@ -40,7 +40,7 @@ class _EmpreinteDigitaleState extends State<EmpreinteDigitale> {
       setState(() {
         _isAuthenticated = isAuthenticated;
         _isAuthenticating = false;
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>Welcome(number: widget.number,)));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Welcome(number: widget.number,)));
       });
     } catch (e) {
       setState(() {

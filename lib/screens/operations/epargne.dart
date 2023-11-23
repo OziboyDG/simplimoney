@@ -14,10 +14,20 @@ class Epargne extends StatefulWidget {
 
 class _EpargneState extends State<Epargne> {
   late int thriftAmount;
-  @override
-  void initState() async{
-      SharedPreferences pref = await SharedPreferences.getInstance();
+   Future<void> fetchData() async {
+    // Simulated asynchronous operation
+    await Future.delayed(Duration(milliseconds: 100));
+    SharedPreferences pref = await SharedPreferences.getInstance();
       thriftAmount = pref.getInt("thriftAmount")??0;
+  }
+  @override
+  void initState() {
+    fetchData().then((data) {
+      // Once the data is fetched, update the state or perform necessary operations
+      setState(() {
+        // Update state variables or perform operations with the fetched data
+      });
+    });
     super.initState();
   }
   @override

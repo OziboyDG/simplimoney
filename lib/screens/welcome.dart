@@ -21,10 +21,21 @@ class _WelcomeState extends State<Welcome> {
   //   number = pref.getString('NUMBER') ?? 'loading...';
   // }
 
-  @override
-  void initState() async{
+   Future<void> fetchData() async {
+    // Simulated asynchronous operation
+    await Future.delayed(const Duration(milliseconds: 100));
     SharedPreferences pref = await SharedPreferences.getInstance();
     availableAmount = pref.getInt("availableAmount")??0;
+  }
+
+  @override
+  void initState() {
+    fetchData().then((data) {
+      // Once the data is fetched, update the state or perform necessary operations
+      setState(() {
+        // Update state variables or perform operations with the fetched data
+      });
+    });
     super.initState();
   }
 

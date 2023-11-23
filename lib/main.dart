@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simplymoney_mtn/screens/authentification/contact_page.dart';
+import 'package:simplymoney_mtn/screens/welcome.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,10 +38,18 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(milliseconds: 1000), () {
-      Navigator.of(context).push(MaterialPageRoute(
+    Future.delayed(const Duration(milliseconds: 1000), () async{
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      var number = pref.getString('NUMBER');
+      if(number== null){
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => const Contact_Page(),
       ));
+      }else{
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => Welcome(number: number,),
+      ));
+      }
     });
   }
   Widget build(BuildContext context) {
