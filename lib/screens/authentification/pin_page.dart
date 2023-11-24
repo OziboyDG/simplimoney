@@ -11,7 +11,6 @@ class PinPage extends StatefulWidget {
 }
 
 class _PinPageState extends State<PinPage> {
-  @override
   late Size mediaSize;
   TextEditingController pin1 = TextEditingController();
   TextEditingController pin2 = TextEditingController();
