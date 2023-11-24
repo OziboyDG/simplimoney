@@ -3,6 +3,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simplymoney_mtn/consts/color_app.dart';
 import 'package:simplymoney_mtn/screens/authentification/pin_page.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class Contact_Page extends StatefulWidget {
   const Contact_Page({super.key});
@@ -13,7 +14,15 @@ class Contact_Page extends StatefulWidget {
 
 class _Contact_PageState extends State<Contact_Page> {
   static late Size mediaSize;
+  late AudioPlayer player;
   TextEditingController _mynumber = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+
+    player = AudioPlayer();
+    player.setSourceUrl("assets/audios/Phrase_1.mp3");
+  }
   @override
   Widget build(BuildContext context) {
     mediaSize = MediaQuery.of(context).size;
